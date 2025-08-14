@@ -1,0 +1,28 @@
+{{define "base.html"}}
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .title }}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>easy erp</h1>
+        <nav>
+            <a href="/">pdv</a>
+            <a href="/produtos">produtos</a>
+            <a href="/vendas">vendas</a>
+        </nav>
+    </header>
+    <main>
+        {{ block "content" . }}{{ end }}
+    </main>
+    <footer>
+        <p>© 2025 easy erp</p>
+    </footer>
+</body>
+</html>
+{{end}}
