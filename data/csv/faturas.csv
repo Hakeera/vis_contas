@@ -1,0 +1,3 @@
+faturaid,vencimento,valor,n_parcelas,parcela,categoria,situacao,tipo_transf,nota_fiscal,boleto
+3,3/3/2024,642.80,1,1/1,IMJ ARMARINHOS,Fornecimento,Pago,Boleto,162
+10,3/25/2024,936.00,2,2/2,MB ETIQUETAS,Serviço,Pendente,Boleto,1224,1224-B

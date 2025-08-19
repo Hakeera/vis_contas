@@ -11,7 +11,7 @@ import (
 
 
 func Home(c echo.Context) error {
-	tmpl, err := template.ParseFiles("view/faturas.html",
+	tmpl, err := template.ParseFiles("view/invoices.html",
 					"view/template/base.html",
 )
 
@@ -21,6 +21,6 @@ func Home(c echo.Context) error {
 	}
 
 	// Executa o template base
-	return tmpl.ExecuteTemplate(c.Response(), "faturas.html", nil)
-	
+	return tmpl.ExecuteTemplate(c.Response(), "base.html", nil)
 }
+
