@@ -14,9 +14,8 @@ func SetUpRoutes(e *echo.Echo)  {
 	// Página Inicial
 	e.GET("/", controller.Home)
 
-	// Filtros
-	e.GET("/filtro_categoria", controller.FiltroCategoria)
-	e.GET("/filtro_situacao", controller.FiltroSitucao)
-	e.GET("/filtro_data", controller.FiltroData)
-	e.GET("/limpar_filtros", controller.LimparFiltros)
+	// Carrega a tabela com dados filtrados 
+	e.GET("/load_table", controller.LoadTable)
+	// Altera situação da fatura 
+	e.PUT("/alterar_situacao/:id", controller.AlterarSituacao)
 }

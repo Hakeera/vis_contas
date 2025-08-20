@@ -1,0 +1,50 @@
+{{ define "invoice_table" }}
+<table class="invoice-table">
+  <thead>
+    <tr>
+      <th>Vencimento</th>
+      <th>Destinatário</th>
+      <th>Categoria</th>
+      <th>Valor</th>
+      <th>Situação</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range .Faturas }}
+    <tr class="invoice-row {{ if eq .Situacao "Pago" }}paid{{ else }}pending{{ end }}">
+      <td class="date">{{ .Vencimento.Format "02/01/2006" }}</td>
+      <td class="recipient">{{ .Destinatario }}</td>
+      <td>
+        <span class="category-tag category-{{ .Categoria }}">{{ .Categoria }}</span>
+      </td>
+      <td class="value">R$ {{ printf "%.2f" .Valor }}</td>
+      <td>
+        <span class="status-badge {{ if eq .Situacao "Pago" }}status-paid{{ else }}status-pending{{ end }}">{{ .Situacao }}</span>
+      </td>
+      <td class="actions">
+        {{ if eq .Situacao "Pago" }}
+          <button class="btn-action btn-pending" 
+                  hx-put="/alterar_situacao/{{ .FaturaID }}"
+                  hx-target="#invoice-table-content"
+                  hx-swap="outerHTML">
+            Marcar Pendente
+          </button>
+        {{ else }}
+          <button class="btn-action btn-pay"
+                  hx-put="/alterar_situacao/{{ .FaturaID }}"
+                  hx-target="#invoice-table-content"
+                  hx-swap="outerHTML">
+            Marcar Pago
+          </button>
+        {{ end }}
+      </td>
+    </tr>
+    {{ else }}
+    <tr>
+      <td colspan="7" class="no-data">Nenhuma fatura encontrada</td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>
+{{ end }}

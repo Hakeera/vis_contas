@@ -18,28 +18,33 @@
 				</div>
 			</div>
 		</header>
-
 		<div class="filters">
 			<div class="filter-group">
 				<label for="date-from">De:</label>
-				<input type="date" id="date-from" name="date-from" value="2024-01-01">
+				<input type="date" id="date-from" name="date-from" value="2024-01-01"
+										   hx-get="/load_table"
+										   hx-target="#invoice-table-content"
+										   hx-trigger="change"
+										   hx-include="#date-from, #date-to, #categoria, #situacao">
 			</div>
 			<div class="filter-group">
 				<label for="date-to">Até:</label>
-				<input type="date" id="date-to" name="date-to" value="2024-12-31">
+				<input type="date" id="date-to" name="date-to" value="2024-12-31"
+									       hx-get="/load_table"
+									       hx-target="#invoice-table-content"
+									       hx-trigger="change"
+									       hx-include="#date-from, #date-to, #categoria, #situacao">
 			</div>
 			<div class="filter-group">
 				<label for="categoria">Categoria:</label>
-				<select id="categoria" 
-					name="categoria"
-					hx-get="/filtro_categoria"
-					hx-target="#invoice-table-content"
-					hx-trigger="change"
-					hx-include="[name='categoria']">
-
+				<select id="categoria" name="categoria"
+						       hx-get="/load_table"
+						       hx-target="#invoice-table-content"
+						       hx-trigger="change"
+						       hx-include="#date-from, #date-to, #categoria, #situacao">
 					<option value="">Todas</option>
-					<option value="Escritório">Escritório</option>
-					<option value="Marketing">Marketing</option>
+					<option value="Fornecimento">Fornecimento</option>
+					<option value="Serviço">Serviço</option>
 					<option value="Operacional">Operacional</option>
 					<option value="Tecnologia">Tecnologia</option>
 					<option value="Financeiro">Financeiro</option>
@@ -49,219 +54,39 @@
 			</div>
 			<div class="filter-group">
 				<label for="situacao">Situação:</label>
-				<select id="situacao" 
-					name="situacao"
-					hx-get="/filtro_situacao"
-					hx-target="#invoice-table-content"
-					hx-trigger="change"
-					hx-include="[name='situacao']">
-
+				<select id="situacao" name="situacao"
+						      hx-get="/load_table"
+						      hx-target="#invoice-table-content"
+						      hx-trigger="change"
+						      hx-include="#date-from, #date-to, #categoria, #situacao">
 					<option value="">Todas</option>
 					<option value="Pendente">Pendente</option>
 					<option value="Pago">Pago</option>
 				</select>
-			</div>
-			<button class="clear-filters">Limpar Filtros</button>
+			</div> <button class="clear-filters" 
+				       hx-get="/load_table"
+				       hx-target="#invoice-table-content"
+				       hx-include="#date-from, #date-to, #categoria, #situacao"
+				       onclick="document.querySelector('#date-from').value='2024-01-01'; 
+				       document.querySelector('#date-to').value='2024-12-31'; 
+				       document.querySelector('#categoria').value=''; 
+				       document.querySelector('#situacao').value='';">
+				Limpar Filtros
+			</button>
 		</div>
 
 		<div class="table-container">
-			<table class="invoice-table">
-				<thead>
-					<tr>
-						<th>Vencimento</th>
-						<th>Destinatário</th>
-						<th>Categoria</th>
-						<th>Parcela</th>
-						<th>Valor</th>
-						<th>Situação</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<div id="invoice-table-content"></div>
-				<tbody>
-					<tr class="invoice-row pending">
-						<td class="date">15/01/2024</td>
-						<td class="recipient">Escritório Contábil Ltda</td>
-						<td>
-							<span class="category-tag category-financeiro">Financeiro</span>
-						</td>
-						<td class="installment">1/1</td>
-						<td class="value">R$ 1.250,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-					<tr class="invoice-row paid">
-						<td class="date">10/01/2024</td>
-						<td class="recipient">Google Ads</td>
-						<td>
-							<span class="category-tag category-marketing">Marketing</span>
-						</td>
-						<td class="installment">1/1</td>
-						<td class="value">R$ 2.500,00</td>
-						<td>
-							<span class="status-badge status-paid">Pago</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pending">Marcar Pendente</button>
-						</td>
-					</tr>
-					<tr class="invoice-row pending">
-						<td class="date">20/01/2024</td>
-						<td class="recipient">AWS Brasil</td>
-						<td>
-							<span class="category-tag category-tecnologia">Tecnologia</span>
-						</td>
-						<td class="installment">1/12</td>
-						<td class="value">R$ 890,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-					<tr class="invoice-row paid">
-						<td class="date">05/01/2024</td>
-						<td class="recipient">Limpeza e Conservação S/A</td>
-						<td>
-							<span class="category-tag category-operacional">Operacional</span>
-						</td>
-						<td class="installment">1/6</td>
-						<td class="value">R$ 750,00</td>
-						<td>
-							<span class="status-badge status-paid">Pago</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pending">Marcar Pendente</button>
-						</td>
-					</tr>
-					<tr class="invoice-row pending">
-						<td class="date">25/01/2024</td>
-						<td class="recipient">Microsoft Office 365</td>
-						<td>
-							<span class="category-tag category-tecnologia">Tecnologia</span>
-						</td>
-						<td class="installment">1/12</td>
-						<td class="value">R$ 320,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-					<tr class="invoice-row pending">
-						<td class="date">30/01/2024</td>
-						<td class="recipient">Aluguel Comercial</td>
-						<td>
-							<span class="category-tag category-escritorio">Escritório</span>
-						</td>
-						<td class="installment">1/1</td>
-						<td class="value">R$ 4.500,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-					<tr class="invoice-row paid">
-						<td class="date">08/01/2024</td>
-						<td class="recipient">Agência Criativa Digital</td>
-						<td>
-							<span class="category-tag category-marketing">Marketing</span>
-						</td>
-						<td class="installment">3/6</td>
-						<td class="value">R$ 1.800,00</td>
-						<td>
-							<span class="status-badge status-paid">Pago</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pending">Marcar Pendente</button>
-						</td>
-					</tr>
-					<tr class="invoice-row pending">
-						<td class="date">12/02/2024</td>
-						<td class="recipient">Energia Elétrica</td>
-						<td>
-							<span class="category-tag category-operacional">Operacional</span>
-						</td>
-						<td class="installment">1/1</td>
-						<td class="value">R$ 680,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-					<tr class="invoice-row pending">
-						<td class="date">18/02/2024</td>
-						<td class="recipient">Plano de Saúde Empresarial</td>
-						<td>
-							<span class="category-tag category-rh">RH</span>
-						</td>
-						<td class="installment">2/12</td>
-						<td class="value">R$ 3.200,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-					<tr class="invoice-row paid">
-						<td class="date">03/01/2024</td>
-						<td class="recipient">Consultoria Jurídica</td>
-						<td>
-							<span class="category-tag category-financeiro">Financeiro</span>
-						</td>
-						<td class="installment">1/3</td>
-						<td class="value">R$ 2.100,00</td>
-						<td>
-							<span class="status-badge status-paid">Pago</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pending">Marcar Pendente</button>
-						</td>
-					</tr>
-					<tr class="invoice-row pending">
-						<td class="date">22/02/2024</td>
-						<td class="recipient">Material de Escritório</td>
-						<td>
-							<span class="category-tag category-escritorio">Escritório</span>
-						</td>
-						<td class="installment">1/1</td>
-						<td class="value">R$ 450,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-					<tr class="invoice-row pending">
-						<td class="date">28/02/2024</td>
-						<td class="recipient">CRM Software Ltda</td>
-						<td>
-							<span class="category-tag category-vendas">Vendas</span>
-						</td>
-						<td class="installment">2/12</td>
-						<td class="value">R$ 1.200,00</td>
-						<td>
-							<span class="status-badge status-pending">Pendente</span>
-						</td>
-						<td class="actions">
-							<button class="btn-action btn-pay">Marcar Pago</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="invoice-table-content" 
+			     hx-get="/load_table"
+			     hx-trigger="load"
+			     hx-include="#date-from, #date-to, #categoria, #situacao">
+				<!-- Loading placeholder -->
+				<div class="loading">
+					<span>⏳ Carregando faturas...</span>
+				</div>
+			</div>
 		</div>
+
 	</div>
 </div>
 {{end}}
