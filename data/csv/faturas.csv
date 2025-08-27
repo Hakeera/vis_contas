@@ -1,3 +1,7 @@
-faturaid,vencimento,valor,nparcelas,parcela,destinatario,categoria,situacao,tipotransf,notafiscal,boleto
-3,3/3/2024,642.80,1,1/1,IMJ ARMARINHOS,Fornecimento,Pago,Boleto,,162
-10,25/3/2024,936.00,2,2/2,MB ETIQUETAS,Serviço,Pendente,Boleto,1224,1224-B
+faturaid,vencimento,valor,nparcelas,parcela,destinatario,categoria,situacao,tipotransf,notafiscal,boleto,empresa
+3,3/3/2024,642.80,1,1/1,IMJ ARMARINHOS,Fornecimento,Pendente,Boleto,,162,sarracena
+10,25/3/2024,936.00,2,2/2,MB ETIQUETAS,Serviço,Pendente,Boleto,1224,1224-B,natura_centro
+4,3/3/2024,642.80,1,1/1,IMJ ARMARINHOS,Fornecimento,Pago,Boleto,,162,sarracena
+1,25/3/2024,936.00,2,2/2,MB ETIQUETAS,Fornecimento,Pago,Boleto,1224,1224-B,natura_centro
+5,3/3/2024,642.80,1,1/1,IMJ ARMARINHOS,Fornecimento,Pago,Boleto,,162,sarracena
+50,25/3/2024,936.00,2,2/2,MB ETIQUETAS,Serviço,Pendente,Boleto,1224,1224-B,natura_xv

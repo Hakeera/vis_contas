@@ -25,14 +25,14 @@
       <td class="actions">
         {{ if eq .Situacao "Pago" }}
           <button class="btn-action btn-pending" 
-                  hx-put="/alterar_situacao/{{ .FaturaID }}"
+                  hx-put="/sit_pendente/{{ .FaturaID }}"
                   hx-target="#invoice-table-content"
                   hx-swap="outerHTML">
             Marcar Pendente
           </button>
         {{ else }}
           <button class="btn-action btn-pay"
-                  hx-put="/alterar_situacao/{{ .FaturaID }}"
+                  hx-put="/sit_pago/{{ .FaturaID }}"
                   hx-target="#invoice-table-content"
                   hx-swap="outerHTML">
             Marcar Pago

@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 	"sync"
-	"vis_contas/model"
+	"vis_contas/internal/model"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -44,6 +44,7 @@ func InitDB() {
 		// Migrar as tabelas
 		if err := DB.AutoMigrate(
 			&model.Faturas{}, 
+			&model.User{}, 
 		); err != nil {
 			log.Fatalf("Erro ao migrar banco: %v", err)
 		}

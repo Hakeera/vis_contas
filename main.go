@@ -45,6 +45,26 @@ func main() {
 	// Carregar Variáveis de Ambiente
 	config.LoadEnv()
 	
+	// Inicializa o banco de dados
+	config.InitDB()
+
+	// Verifica se o banco está funcionando
+	db := config.GetDB()
+	if db != nil {
+		log.Println("✅ Banco de dados conectado com sucesso!")
+		// Teste simples de conexão
+		sqlDB, err := db.DB()
+		if err == nil {
+			if err := sqlDB.Ping(); err == nil {
+				log.Println("✅ Ping no banco OK!")
+			} else {
+				log.Printf("❌ Erro no ping: %v", err)
+			}
+		}
+	} else {
+		log.Println("❌ Banco de dados é nil!")
+	}
+
 	// Configura o renderer de templates com as funções personalizadas
 	renderer := &TemplateRenderer{
 		templates: template.Must(
