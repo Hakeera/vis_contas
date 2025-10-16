@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.12/htmx.min.js"></script>
+    <link rel="stylesheet" href="/static/login_styles.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Área de mensagens -->
+        <div id="messages"></div>
+
+        <!-- Área de conteúdo principal -->
+        <div id="main-content">
+            <!-- Abas -->
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('login')">Login</button>
+                <button class="tab" onclick="showTab('register')">Registrar</button>
+            </div>
+
+            <!-- Container dos formulários -->
+            <div class="form-container">
+                <!-- Formulário de Login -->
+                <form id="login" class="form active" 
+                      hx-post="/login">
+                    <div class="form-group">
+                        <label for="login-username">Usuário</label>
+                        <input type="text" 
+                               id="login-username" 
+                               name="username" 
+                               required 
+                               autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" 
+                               id="login-password" 
+                               name="password" 
+                               required 
+                               autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Entrar</span>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Formulário de Registro -->
+                <form id="register" class="form" 
+                      hx-post="/register" 
+                      hx-target="#messages" 
+                      hx-swap="innerHTML">
+                    <div class="form-group">
+                        <label for="register-username">Usuário</label>
+                        <input type="text" 
+                               id="register-username" 
+                               name="username" 
+                               required 
+                               autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Senha</label>
+                        <input type="password" 
+                               id="register-password" 
+                               name="password" 
+                               required 
+                               autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Registrar</span>
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Remove active class de todas as abas e formulários
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.form').forEach(form => form.classList.remove('active'));
+            
+            // Adiciona active class na aba e formulário selecionado
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            // Limpa mensagens
+            document.getElementById('messages').innerHTML = '';
+        }
+
+        // Limpa as mensagens quando o usuário começa a digitar
+        document.addEventListener('input', function(e) {
+            if (e.target.matches('input')) {
+                document.getElementById('messages').innerHTML = '';
+            }
+        });
+
+        // Função para logout
+        function logout() {
+            document.getElementById('main-content').innerHTML = `
+                <div class="tabs">
+                    <button class="tab active" onclick="showTab('login')">Login</button>
+                    <button class="tab" onclick="showTab('register')">Registrar</button>
+                </div>
+                <div class="form-container">
+                    <form id="login" class="form active" hx-post="/login" hx-target="#main-content" hx-swap="innerHTML">
+                        <div class="form-group">
+                            <label for="login-username">Usuário</label>
+                            <input type="text" id="login-username" name="username" required autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Senha</label>
+                            <input type="password" id="login-password" name="password" required autocomplete="current-password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-text">Entrar</span>
+                            <div class="loading"><div class="spinner"></div></div>
+                        </button>
+                    </form>
+                    <form id="register" class="form" hx-post="/register" hx-target="#messages" hx-swap="innerHTML">
+                        <div class="form-group">
+                            <label for="register-username">Usuário</label>
+                            <input type="text" id="register-username" name="username" required autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Senha</label>
+                            <input type="password" id="register-password" name="password" required autocomplete="new-password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-text">Registrar</span>
+                            <div class="loading"><div class="spinner"></div></div>
+                        </button>
+                    </form>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

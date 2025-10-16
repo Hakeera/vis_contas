@@ -2,25 +2,32 @@
 package routes
 
 import (
+	"vis_contas/internal/auth"
 	"vis_contas/internal/controller"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
+func SetUpRoutes(e *echo.Echo) {
 
+	// Middleware Global Echo
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 
-func SetUpRoutes(e *echo.Echo)  {
-
-	// Página Inicial
+	// Público
 	e.GET("/", controller.Home)
-
-	// Carrega a tabela com dados filtrados 
-	e.GET("/load_table", controller.LoadTable)
-	// Altera situação da fatura 
-	e.PUT("/sit_pendente/:id", controller.DeixarPendente)
-	e.PUT("/sit_pago/:id", controller.DeixarPago)
-
-	// Login
-	e.POST("/register", controller.Register)
+	e.GET("/user", controller.LoginPage)
 	e.POST("/login", controller.Login)
+	e.POST("/register", controller.Register)
+
+	// Protegido com JWT
+	r := e.Group("")
+	r.Use(auth.RequireAuth)
+
+	r.GET("/load_table", controller.LoadTable)
+	r.PUT("/alternar_sit/:id", controller.AlternarSituacao)
+	r.PUT("/alternar_sit/:id", controller.AlternarSituacao)
+	r.POST("/logout", controller.Logout)
 }

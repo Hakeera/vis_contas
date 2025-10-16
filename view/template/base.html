@@ -17,119 +17,132 @@
 				</div>
 				<nav class="sidebar-nav">
 					<a href="/faturas_natura_centro"
-						hx-get="/load_table"
-						hx-trigger="click"
-						hx-include="#date-from, #date-to, #categoria, #situacao"
-						hx-target="#invoice-table-content"
-						hx-vals='{"empresa": "natura_centro"}'
-						class="nav-link" data-empresa="natura_centro">
+					   hx-get="/load_table"
+					   hx-trigger="click"
+					   hx-include="#year, #month, #categoria, #situacao, #empresa"
+					   hx-target="#invoice-table-content"
+					   hx-vals='{"empresa": "natura_centro"}'
+					   class="nav-link" data-empresa="natura_centro">
 						<span class="nav-text">Natura Centro</span>
 					</a>
 					<a href="/faturas_natura_ara"
-						hx-get="/load_table"
-						hx-trigger="click"
-						hx-include="#date-from, #date-to, #categoria, #situacao"
-						hx-target="#invoice-table-content"
-						hx-vals='{"empresa": "natura_ara"}'
-						class="nav-link" data-empresa="natura_ara">
+					   hx-get="/load_table"
+					   hx-trigger="click"
+					   hx-include="#year, #month, #categoria, #situacao, #empresa"
+					   hx-target="#invoice-table-content"
+					   hx-vals='{"empresa": "natura_ara"}'
+					   class="nav-link" data-empresa="natura_ara">
 						<span class="nav-text">Natura Araraquara</span>
 					</a>
 					<a href="/faturas_natura_xv"
-						hx-get="/load_table"
-						hx-trigger="click"
-						hx-include="#date-from, #date-to, #categoria, #situacao"
-						hx-target="#invoice-table-content"
-						hx-vals='{"empresa": "natura_xv"}'
-						class="nav-link" data-empresa="natura_xv">
+					   hx-get="/load_table"
+					   hx-trigger="click"
+					   hx-include="#year, #month, #categoria, #situacao, #empresa"
+					   hx-target="#invoice-table-content"
+					   hx-vals='{"empresa": "natura_xv"}'
+					   class="nav-link" data-empresa="natura_xv">
 						<span class="nav-text">Natura XV</span>
 					</a>
 					<a href="/faturas_sarracena"
-						hx-get="/load_table"
-						hx-trigger="click"
-						hx-include="#date-from, #date-to, #categoria, #situacao"
-						hx-target="#invoice-table-content"
-						hx-vals='{"empresa": "sarracena"}'
-						class="nav-link" data-empresa="sarracena">
+					   hx-get="/load_table"
+					   hx-trigger="click"
+					   hx-include="#year, #month, #categoria, #situacao, #empresa"
+					   hx-target="#invoice-table-content"
+					   hx-vals='{"empresa": "sarracena"}'
+					   class="nav-link" data-empresa="sarracena">
 						<span class="nav-text">Sarracena</span>
 					</a>
 				</nav>
 			</aside>
-			
+
 			<!-- Main content -->
 			<main class="main-content">
-			<div>
-				<!-- Campo hidden para armazenar a empresa selecionada -->
-				<input type="hidden" id="empresa" name="empresa" value="">
-				
-				<div class="filters">
-					<div class="filter-group">
-						<label for="date-from">De:</label>
-						<input type="date" id="date-from" name="date-from" value="2024-01-01"
-							hx-get="/load_table"
-							hx-target="#invoice-table-content"
-							hx-trigger="change"
-							hx-include="#date-from, #date-to, #categoria, #situacao, #empresa">
-					</div>
-					<div class="filter-group">
-						<label for="date-to">Até:</label>
-						<input type="date" id="date-to" name="date-to" value="2024-12-31"
-							hx-get="/load_table"
-							hx-target="#invoice-table-content"
-							hx-trigger="change"
-							hx-include="#date-from, #date-to, #categoria, #situacao, #empresa">
-					</div>
-					<div class="filter-group">
-						<label for="categoria">Categoria:</label>
-						<select id="categoria" name="categoria"
-							hx-get="/load_table"
-							hx-target="#invoice-table-content"
-							hx-trigger="change"
-							hx-include="#date-from, #date-to, #categoria, #situacao, #empresa">
-							<option value="">Todas</option>
-							<option value="Fornecimento">Fornecimento</option>
-							<option value="Serviço">Serviço</option>
-							<option value="Operacional">Operacional</option>
-							<option value="Tecnologia">Tecnologia</option>
-							<option value="Financeiro">Financeiro</option>
-							<option value="Vendas">Vendas</option>
-							<option value="RH">RH</option>
-						</select>
-					</div>
-					<div class="filter-group">
-						<label for="situacao">Situação:</label>
-						<select id="situacao" name="situacao"
-							hx-get="/load_table"
-							hx-target="#invoice-table-content"
-							hx-trigger="change"
-							hx-include="#date-from, #date-to, #categoria, #situacao, #empresa">
-							<option value="">Todas</option>
-							<option value="Pendente">Pendente</option>
-							<option value="Pago">Pago</option>
-						</select>
-					</div>
-					<button class="clear-filters" 
-						hx-get="/load_table"
-						hx-target="#invoice-table-content"
-						hx-include="#date-from, #date-to, #categoria, #situacao, #empresa"
-						onclick="document.querySelector('#date-from').value='2024-01-01'; 
-						document.querySelector('#date-to').value='2024-12-31'; 
-						document.querySelector('#categoria').value=''; 
-						document.querySelector('#situacao').value='';">
-						Limpar Filtros
-					</button>
-				</div>
-				<div class="table-container">
-					<div id="invoice-table-content"
-						hx-get="/load_table"
-						hx-trigger="load"
-						hx-vals='{"empresa": "natura_centro"}'
-						>
-						<!-- Loading placeholder -->
-						<div class="loading">
-							<span>⏳ Carregando faturas...</span>
+				<div>
+					<!-- Campo hidden para armazenar a empresa selecionada -->
+					<input type="hidden" id="empresa" name="empresa" value="">
+					
+					<div class="filters">
+						<div class="filter-group">
+							<label for="year">Ano:</label>
+							<select id="year" name="year"
+									  hx-get="/load_table"
+									  hx-target="#invoice-table-content"
+									  hx-trigger="change"
+									  hx-include="#year, #month, #categoria, #situacao, #empresa">
+								<option value="">Todos</option>
+								<option value="2022">2022</option>
+								<option value="2023">2023</option>
+								<option value="2024" selected>2024</option>
+								<option value="2025">2025</option>
+							</select>
 						</div>
+						<div class="filter-group">
+							<label for="month">Mês:</label>
+							<select id="month" name="month"
+									   hx-get="/load_table"
+									   hx-target="#invoice-table-content"
+									   hx-trigger="change"
+									   hx-include="#year, #month, #categoria, #situacao, #empresa">
+								<option value="">Todos</option>
+								<option value="01">Janeiro</option>
+								<option value="02">Fevereiro</option>
+								<option value="03">Março</option>
+								<option value="04">Abril</option>
+								<option value="05">Maio</option>
+								<option value="06">Junho</option>
+								<option value="07">Julho</option>
+								<option value="08">Agosto</option>
+								<option value="09">Setembro</option>
+								<option value="10">Outubro</option>
+								<option value="11">Novembro</option>
+								<option value="12">Dezembro</option>
+							</select>
+						</div>
+						<div class="filter-group">
+							<label for="categoria">Categoria:</label>
+							<select id="categoria" name="categoria"
+									       hx-get="/load_table"
+									       hx-target="#invoice-table-content"
+									       hx-trigger="change"
+									       hx-include="#year, #month, #categoria, #situacao, #empresa">
+								<option value="">Todas</option>
+								<option value="Fornecimento">Fornecimento</option>
+								<option value="Serviço">Serviço</option>
+								<option value="Operacional">Operacional</option>
+								<option value="Tecnologia">Tecnologia</option>
+								<option value="Financeiro">Financeiro</option>
+								<option value="Vendas">Vendas</option>
+								<option value="RH">RH</option>
+							</select>
+						</div>
+						<div class="filter-group">
+							<label for="situacao">Situação:</label>
+							<select id="situacao" name="situacao"
+									      hx-get="/load_table"
+									      hx-target="#invoice-table-content"
+									      hx-trigger="change"
+									      hx-include="#year, #month, #categoria, #situacao, #empresa">
+								<option value="">Todas</option>
+								<option value="Pendente">Pendente</option>
+								<option value="Pago">Pago</option>
+							</select>
+						</div>
+						<button class="clear-filters" 
+							hx-get="/load_table"
+							hx-target="#invoice-table-content"
+							hx-include="#year, #month, #categoria, #situacao, #empresa"
+							onclick="document.querySelector('#year').value='2024'; 
+							document.querySelector('#month').value=''; 
+							document.querySelector('#categoria').value=''; 
+							document.querySelector('#situacao').value='';">
+							Limpar Filtros
+						</button>
 					</div>
-				</div>
+
+					<!-- Área onde a tabela será carregada -->
+					<div id="invoice-table-content">
+						<!-- Conteúdo da tabela será carregado aqui via HTMX -->
+					</div>
 				</div>
 			</main>
 		</div>

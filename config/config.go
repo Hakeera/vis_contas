@@ -1,10 +1,13 @@
-package config 
+package config
 
 import (
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 )
+
+var JWTSecret = []byte(os.Getenv("JWT_SECRET"))
 
 // LoadEnv carrega variáveis do arquivo .env
 func LoadEnv() {

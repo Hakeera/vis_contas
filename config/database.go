@@ -14,7 +14,7 @@ import (
 
 var (
 	// DB é a instância global de conexão com o banco de dados
-DB   *gorm.DB
+	DB *gorm.DB
 	// once garante que a inicialização do banco ocorra apenas uma vez
 	once sync.Once
 )
@@ -40,15 +40,15 @@ func InitDB() {
 		if err != nil {
 			log.Fatalf("Erro ao conectar ao banco de dados: %v", err)
 		}
-		
+
 		// Migrar as tabelas
 		if err := DB.AutoMigrate(
-			&model.Faturas{}, 
-			&model.User{}, 
+			&model.Fatura{},
+			&model.User{},
 		); err != nil {
 			log.Fatalf("Erro ao migrar banco: %v", err)
 		}
-		
+
 	})
 }
 
@@ -61,4 +61,3 @@ func GetDB() *gorm.DB {
 	}
 	return DB
 }
-

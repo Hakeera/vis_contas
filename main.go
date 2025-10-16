@@ -7,6 +7,7 @@ import (
 	"log"
 	"vis_contas/config"
 	"vis_contas/internal/routes"
+	"vis_contas/internal/service"
 
 	"github.com/labstack/echo/v4"
 )
@@ -17,34 +18,34 @@ type TemplateRenderer struct {
 }
 
 func (t *TemplateRenderer) Render(w io.Writer, name string, data any, c echo.Context) error {
-    tmpl := t.templates.Lookup(name)
-    if tmpl == nil {
-        log.Printf("❌ Template '%s' não encontrado!", name)
-        for _, t := range t.templates.Templates() {
-            log.Printf("📄 Template disponível: %s", t.Name())
-        }
-        return fmt.Errorf("template %s não encontrado", name)
-    }
-    
-    log.Printf("✅ Renderizando template: %s", name)
-    log.Printf("📊 Dados: %+v", data)
-    
-    // 🎯 Capturar o erro da execução
-    err := t.templates.ExecuteTemplate(w, name, data)
-    if err != nil {
-        log.Printf("❌ ERRO na execução do template '%s': %v", name, err)
-        return fmt.Errorf("erro ao executar template %s: %v", name, err)
-    }
-    
-    log.Printf("✅ Template '%s' executado com sucesso!", name)
-    return nil
+	tmpl := t.templates.Lookup(name)
+	if tmpl == nil {
+		log.Printf("❌ Template '%s' não encontrado!", name)
+		for _, t := range t.templates.Templates() {
+			log.Printf("📄 Template disponível: %s", t.Name())
+		}
+		return fmt.Errorf("template %s não encontrado", name)
+	}
+
+	log.Printf("✅ Renderizando template: %s", name)
+	log.Printf("📊 Dados: %+v", data)
+
+	// 🎯 Capturar o erro da execução
+	err := t.templates.ExecuteTemplate(w, name, data)
+	if err != nil {
+		log.Printf("❌ ERRO na execução do template '%s': %v", name, err)
+		return fmt.Errorf("erro ao executar template %s: %v", name, err)
+	}
+
+	log.Printf("✅ Template '%s' executado com sucesso!", name)
+	return nil
 }
 
 func main() {
 
 	// Carregar Variáveis de Ambiente
 	config.LoadEnv()
-	
+
 	// Inicializa o banco de dados
 	config.InitDB()
 
@@ -64,6 +65,7 @@ func main() {
 	} else {
 		log.Println("❌ Banco de dados é nil!")
 	}
+	service.CSVtoSQL("data/csv/faturas.csv")
 
 	// Configura o renderer de templates com as funções personalizadas
 	renderer := &TemplateRenderer{
@@ -76,10 +78,10 @@ func main() {
 	e := echo.New()
 	e.Static("/static", "view/static")
 	e.Renderer = renderer
-	
+
 	// Configurar rotas
 	routes.SetUpRoutes(e)
-	
+
 	// Iniciar o servidor
 	log.Println("🚀 Servidor iniciando na porta :1323")
 	e.Logger.Fatal(e.Start(":1323"))

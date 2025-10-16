@@ -11,9 +11,7 @@ import (
 
 
 func Home(c echo.Context) error {
-	tmpl, err := template.ParseFiles("view/invoices.html",
-					"view/template/base.html",
-)
+	tmpl, err := template.ParseFiles("view/template/base.html")
 
 	if err != nil {
 		log.Println("Erro ao carregar templates:", err)
