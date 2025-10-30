@@ -1,26 +1,22 @@
 {{define "login"}}
 <!DOCTYPE html>
 <html lang="pt-BR">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Sistema de Login</title>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.12/htmx.min.js"></script>
-		<link rel="stylesheet" href="/static/login_styles.css">
-	</head>
-	<body>
-		<div class="container">
-			<!-- Área de mensagens -->
-			<div id="messages"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.12/htmx.min.js"></script>
+    <link rel="stylesheet" href="/static/login_styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Área de mensagens -->
+        <div id="messages"></div>
 
+        <!-- Área de conteúdo principal -->
+        <div id="main-content">
+            <!-- Abas -->
 
-			<!-- Área de conteúdo principal -->
-			<div id="main-content">
-				<!-- Abas -->
-				<!-- Container dos formulários -->
-				<div class="form-container">
-					<!-- Formulário de Login -->
-				</div>
 				<form id="login" class="form active" 
 					hx-post="/login"
 					hx-target="#messages"
@@ -48,15 +44,11 @@
 						</div>
 					</button>
 				</form>
+
 			</div>
 		</div>
 
 		<script>
-		document.addEventListener('input', function(e) {
-			if (e.target.matches('input')) {
-				document.getElementById('messages').textContent = '';
-			}
-		});
 		</script>
 	</body>
 </html>

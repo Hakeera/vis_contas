@@ -2,101 +2,13 @@
 package service
 
 import (
-	"encoding/csv"
 	"fmt"
-	"log"
-	"os"
 	"strconv"
 	"strings"
 	"time"
 	"vis_contas/config"
 	"vis_contas/internal/model"
 )
-
-// CSVtoSQL converte csv para o banco SQL
-func CSVtoSQL(csvPath string) error {
-
-	// Ler o arquivo CSV
-	faturas, err := ReadFaturasCSV(csvPath)
-	if err != nil {
-		return fmt.Errorf("erro ao ler CSV: %w", err)
-	}
-
-	// Obter conexão com o banco
-	db := config.GetDB()
-
-	// Inserir dados em batch para melhor performance
-	batchSize := 100
-	for i := 0; i < len(faturas); i += batchSize {
-		end := i + batchSize
-		if end > len(faturas) {
-			end = len(faturas)
-		}
-
-		batch := faturas[i:end]
-
-		// Usar CreateInBatches para inserção eficiente
-		if err := db.CreateInBatches(batch, batchSize).Error; err != nil {
-			return fmt.Errorf("erro ao inserir batch %d-%d: %w", i, end-1, err)
-		}
-
-		log.Printf("Inseridas %d faturas (batch %d-%d)", len(batch), i, end-1)
-	}
-
-	log.Printf("Sucesso! Total de %d faturas inseridas no banco de dados", len(faturas))
-	return nil
-}
-
-// ReadFaturasCSV obtém os dados do csv retorna em memória
-func ReadFaturasCSV(path string) ([]model.Fatura, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, fmt.Errorf("erro ao abrir csv: %w", err)
-	}
-	defer file.Close()
-
-	reader := csv.NewReader(file)
-	reader.Comma = ','
-	records, err := reader.ReadAll()
-
-	if err != nil {
-		return nil, fmt.Errorf("erro ao ler csv: %w", err)
-	}
-
-	var faturas []model.Fatura
-
-	for i, row := range records {
-		if i == 0 {
-			continue
-		}
-
-		// parse seguro dos campos
-		id, _ := strconv.Atoi(row[0])
-		venc, err := time.Parse("2/1/2006", row[1])
-		if err != nil {
-			fmt.Println("Erro ao parsear data:", row[1], err)
-		}
-		valor, _ := strconv.ParseFloat(row[2], 64)
-
-		f := model.Fatura{
-			ID:           uint(id),
-			Vencimento:   venc,
-			Valor:        valor,
-			NParcelas:    row[3],
-			Parcela:      row[4],
-			Destinatario: row[5],
-			Categoria:    row[6],
-			Situacao:     row[7],
-			TipoTransf:   row[8],
-			NotaFiscal:   row[9],
-			Boleto:       row[10],
-			Empresa:      row[11],
-		}
-		faturas = append(faturas, f)
-	}
-
-	return faturas, nil
-}
 
 // FilterFaturas filtra faturas no banco de dados de forma dinâmica
 func FilterFaturas(categoria, situacao, dataStr, empresa string) ([]model.Fatura, error) {

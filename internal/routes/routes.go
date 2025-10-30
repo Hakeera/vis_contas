@@ -17,15 +17,14 @@ func SetUpRoutes(e *echo.Echo) {
 	e.Use(middleware.CORS())
 
 	// Público
-	e.GET("/", controller.Home)
 	e.GET("/user", controller.LoginPage)
 	e.POST("/login", controller.Login)
-	e.POST("/register", controller.Register)
 
 	// Protegido com JWT
 	r := e.Group("")
 	r.Use(auth.RequireAuth)
 
+	r.GET("/", controller.Home)
 	r.GET("/load_table", controller.LoadTable)
 	r.PUT("/alternar_sit/:id", controller.AlternarSituacao)
 	r.PUT("/alternar_sit/:id", controller.AlternarSituacao)

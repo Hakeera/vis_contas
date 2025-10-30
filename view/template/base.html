@@ -17,42 +17,48 @@
 				</div>
 				<nav class="sidebar-nav">
 					<a href="/faturas_natura_centro"
-					   hx-get="/load_table"
-					   hx-trigger="click"
-					   hx-include="#year, #month, #categoria, #situacao, #empresa"
-					   hx-target="#invoice-table-content"
-					   hx-vals='{"empresa": "natura_centro"}'
-					   class="nav-link" data-empresa="natura_centro">
+						hx-get="/load_table"
+						hx-trigger="click"
+						hx-include="#year, #month, #categoria, #situacao, #empresa"
+						hx-target="#invoice-table-content"
+						hx-vals='{"empresa": "natura_centro"}'
+						class="nav-link" data-empresa="natura_centro">
 						<span class="nav-text">Natura Centro</span>
 					</a>
 					<a href="/faturas_natura_ara"
-					   hx-get="/load_table"
-					   hx-trigger="click"
-					   hx-include="#year, #month, #categoria, #situacao, #empresa"
-					   hx-target="#invoice-table-content"
-					   hx-vals='{"empresa": "natura_ara"}'
-					   class="nav-link" data-empresa="natura_ara">
+						hx-get="/load_table"
+						hx-trigger="click"
+						hx-include="#year, #month, #categoria, #situacao, #empresa"
+						hx-target="#invoice-table-content"
+						hx-vals='{"empresa": "natura_ara"}'
+						class="nav-link" data-empresa="natura_ara">
 						<span class="nav-text">Natura Araraquara</span>
 					</a>
 					<a href="/faturas_natura_xv"
-					   hx-get="/load_table"
-					   hx-trigger="click"
-					   hx-include="#year, #month, #categoria, #situacao, #empresa"
-					   hx-target="#invoice-table-content"
-					   hx-vals='{"empresa": "natura_xv"}'
-					   class="nav-link" data-empresa="natura_xv">
+						hx-get="/load_table"
+						hx-trigger="click"
+						hx-include="#year, #month, #categoria, #situacao, #empresa"
+						hx-target="#invoice-table-content"
+						hx-vals='{"empresa": "natura_xv"}'
+						class="nav-link" data-empresa="natura_xv">
 						<span class="nav-text">Natura XV</span>
 					</a>
 					<a href="/faturas_sarracena"
-					   hx-get="/load_table"
-					   hx-trigger="click"
-					   hx-include="#year, #month, #categoria, #situacao, #empresa"
-					   hx-target="#invoice-table-content"
-					   hx-vals='{"empresa": "sarracena"}'
-					   class="nav-link" data-empresa="sarracena">
+						hx-get="/load_table"
+						hx-trigger="click"
+						hx-include="#year, #month, #categoria, #situacao, #empresa"
+						hx-target="#invoice-table-content"
+						hx-vals='{"empresa": "sarracena"}'
+						class="nav-link" data-empresa="sarracena">
 						<span class="nav-text">Sarracena</span>
 					</a>
 				</nav>
+				<button 
+					class="btn btn-secondary" 
+					hx-post="/logout"
+					hx-swap="none">
+					Sair
+				</button>
 			</aside>
 
 			<!-- Main content -->
@@ -60,29 +66,29 @@
 				<div>
 					<!-- Campo hidden para armazenar a empresa selecionada -->
 					<input type="hidden" id="empresa" name="empresa" value="">
-					
+
 					<div class="filters">
 						<div class="filter-group">
 							<label for="year">Ano:</label>
 							<select id="year" name="year"
-									  hx-get="/load_table"
-									  hx-target="#invoice-table-content"
-									  hx-trigger="change"
-									  hx-include="#year, #month, #categoria, #situacao, #empresa">
+								hx-get="/load_table"
+								hx-target="#invoice-table-content"
+								hx-trigger="change"
+								hx-include="#year, #month, #categoria, #situacao, #empresa">
 								<option value="">Todos</option>
-								<option value="2022">2022</option>
-								<option value="2023">2023</option>
-								<option value="2024" selected>2024</option>
-								<option value="2025">2025</option>
+								<option value="2024">2024</option>
+								<option value="2025" selected>2025</option>
+								<option value="2026">2026</option>
+								<option value="2027">2027</option>
 							</select>
 						</div>
 						<div class="filter-group">
 							<label for="month">Mês:</label>
 							<select id="month" name="month"
-									   hx-get="/load_table"
-									   hx-target="#invoice-table-content"
-									   hx-trigger="change"
-									   hx-include="#year, #month, #categoria, #situacao, #empresa">
+								hx-get="/load_table"
+								hx-target="#invoice-table-content"
+								hx-trigger="change"
+								hx-include="#year, #month, #categoria, #situacao, #empresa">
 								<option value="">Todos</option>
 								<option value="01">Janeiro</option>
 								<option value="02">Fevereiro</option>
@@ -101,10 +107,10 @@
 						<div class="filter-group">
 							<label for="categoria">Categoria:</label>
 							<select id="categoria" name="categoria"
-									       hx-get="/load_table"
-									       hx-target="#invoice-table-content"
-									       hx-trigger="change"
-									       hx-include="#year, #month, #categoria, #situacao, #empresa">
+								hx-get="/load_table"
+								hx-target="#invoice-table-content"
+								hx-trigger="change"
+								hx-include="#year, #month, #categoria, #situacao, #empresa">
 								<option value="">Todas</option>
 								<option value="Fornecimento">Fornecimento</option>
 								<option value="Serviço">Serviço</option>
@@ -118,10 +124,10 @@
 						<div class="filter-group">
 							<label for="situacao">Situação:</label>
 							<select id="situacao" name="situacao"
-									      hx-get="/load_table"
-									      hx-target="#invoice-table-content"
-									      hx-trigger="change"
-									      hx-include="#year, #month, #categoria, #situacao, #empresa">
+								hx-get="/load_table"
+								hx-target="#invoice-table-content"
+								hx-trigger="change"
+								hx-include="#year, #month, #categoria, #situacao, #empresa">
 								<option value="">Todas</option>
 								<option value="Pendente">Pendente</option>
 								<option value="Pago">Pago</option>
@@ -131,10 +137,7 @@
 							hx-get="/load_table"
 							hx-target="#invoice-table-content"
 							hx-include="#year, #month, #categoria, #situacao, #empresa"
-							onclick="document.querySelector('#year').value='2024'; 
-							document.querySelector('#month').value=''; 
-							document.querySelector('#categoria').value=''; 
-							document.querySelector('#situacao').value='';">
+							onclick="clearFilters()">
 							Limpar Filtros
 						</button>
 					</div>
@@ -146,72 +149,99 @@
 				</div>
 			</main>
 		</div>
-		
+
 		<script>
-			// Script para gerenciar a sidebar e navegação
-			document.addEventListener('DOMContentLoaded', function() {
-				const navLinks = document.querySelectorAll('.nav-link');
-				const empresaInput = document.querySelector('#empresa');
-				
-				// Função para atualizar link ativo
-				function updateActiveLink(activeLink) {
-					navLinks.forEach(link => link.classList.remove('active'));
-					activeLink.classList.add('active');
-				}
-				
-				// Gerenciar cliques nos links da navegação
-				navLinks.forEach(link => {
-					link.addEventListener('click', function(e) {
-						e.preventDefault();
-						
-						// Atualizar link ativo visualmente
-						updateActiveLink(this);
-						
-						// Extrair empresa do data attribute ou hx-vals
-						const empresa = this.dataset.empresa || JSON.parse(this.getAttribute('hx-vals')).empresa;
-						if (empresaInput) {
-							empresaInput.value = empresa;
-						}
-						
-						// Dispara o evento HTMX
-						htmx.trigger(this, 'click');
-						
-						// Fechar sidebar no mobile após seleção
-						if (window.innerWidth <= 768) {
-							document.querySelector('.sidebar').classList.remove('open');
-						}
-					});
-				});
-				
-				// Destacar primeiro link por padrão (opcional)
-				if (navLinks.length > 0 && !document.querySelector('.nav-link.active')) {
-					updateActiveLink(navLinks[0]);
-					const firstEmpresa = navLinks[0].dataset.empresa || JSON.parse(navLinks[0].getAttribute('hx-vals')).empresa;
-					if (empresaInput) {
-						empresaInput.value = firstEmpresa;
-					}
-				}
-				
-				// Toggle para mobile (se você adicionar o botão)
-				const menuToggle = document.querySelector('.menu-toggle');
-				const sidebar = document.querySelector('.sidebar');
-				
-				if (menuToggle && sidebar) {
-					menuToggle.addEventListener('click', function() {
-						sidebar.classList.toggle('open');
-					});
-					
-					// Fechar sidebar ao clicar fora (mobile)
-					document.addEventListener('click', function(e) {
-						if (window.innerWidth <= 768 && 
-							!sidebar.contains(e.target) && 
-							!menuToggle.contains(e.target) && 
-							sidebar.classList.contains('open')) {
-							sidebar.classList.remove('open');
-						}
-					});
-				}
-			});
+		document.addEventListener('DOMContentLoaded', function() {
+		const navLinks = document.querySelectorAll('.nav-link');
+		const empresaInput = document.querySelector('#empresa');
+		const monthSelect = document.querySelector('#month');
+		const yearSelect = document.querySelector('#year');
+
+		// Define o mês atual ao carregar a página
+		const today = new Date();
+		const currentMonth = String(today.getMonth() + 1).padStart(2, '0'); // Janeiro é 0
+		const currentYear = String(today.getFullYear());
+		if (monthSelect) monthSelect.value = currentMonth;
+		if (yearSelect) yearSelect.value = currentYear;
+
+		// Função para atualizar link ativo
+		function updateActiveLink(activeLink) {
+		navLinks.forEach(link => link.classList.remove('active'));
+		activeLink.classList.add('active');
+		}
+
+		// Gerenciar cliques nos links da navegação
+		navLinks.forEach(link => {
+		link.addEventListener('click', function(e) {
+		e.preventDefault();
+
+		// Atualizar link ativo visualmente
+		updateActiveLink(this);
+
+		// Extrair empresa do data attribute ou hx-vals
+		const empresa = this.dataset.empresa || JSON.parse(this.getAttribute('hx-vals')).empresa;
+		if (empresaInput) empresaInput.value = empresa;
+
+		// Dispara o evento HTMX
+		htmx.trigger(this, 'click');
+
+		// Fechar sidebar no mobile após seleção
+		if (window.innerWidth <= 768) {
+		document.querySelector('.sidebar').classList.remove('open');
+		}
+		});
+		});
+
+		// Toggle para mobile (se você adicionar o botão)
+		const menuToggle = document.querySelector('.menu-toggle');
+		const sidebar = document.querySelector('.sidebar');
+
+		if (menuToggle && sidebar) {
+		menuToggle.addEventListener('click', function() {
+		sidebar.classList.toggle('open');
+		});
+
+		// Fechar sidebar ao clicar fora (mobile)
+		document.addEventListener('click', function(e) {
+		if (window.innerWidth <= 768 && 
+		!sidebar.contains(e.target) && 
+		!menuToggle.contains(e.target) && 
+		sidebar.classList.contains('open')) {
+		sidebar.classList.remove('open');
+		}
+		});
+		}
+		});
+
+		// Função para copiar texto de boletos
+		function copyBoleto(element) {
+		const text = element.textContent.trim();
+		navigator.clipboard.writeText(text)
+		.then(() => {
+		// Feedback visual opcional
+		const original = element.textContent;
+		element.textContent = "Copiado!";
+		setTimeout(() => {
+		element.textContent = original;
+		}, 1500);
+		})
+		.catch(err => {
+		console.error("Erro ao copiar para a área de transferência:", err);
+		});
+		}
+
+		// Função para limpar filtros mantendo mês atual
+		function clearFilters() {
+		const today = new Date();
+		const currentMonth = String(today.getMonth() + 1).padStart(2, '0');
+		const currentYear = String(today.getFullYear());
+
+		document.querySelector('#year').value = currentYear;
+		document.querySelector('#month').value = currentMonth;
+		document.querySelector('#categoria').value = '';
+		document.querySelector('#situacao').value = '';
+
+		}
 		</script>
 	</body>
 </html>

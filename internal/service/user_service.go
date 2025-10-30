@@ -48,14 +48,14 @@ func AutenticarUsuario(username, password string) (*model.User, error) {
 	var user model.User
 	if err := db.Where("username = ?", username).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errors.New("usuário não encontrado")
+			return nil, err
 		}
 		return nil, err
 	}
 
 	// Verifica a senha
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password)); err != nil {
-		return nil, errors.New("senha incorreta")
+		return nil, err
 	}
 
 	return &user, nil

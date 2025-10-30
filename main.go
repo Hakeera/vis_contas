@@ -7,9 +7,9 @@ import (
 	"log"
 	"vis_contas/config"
 	"vis_contas/internal/routes"
-	"vis_contas/internal/service"
 
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // TemplateRenderer para Echo
@@ -65,7 +65,6 @@ func main() {
 	} else {
 		log.Println("❌ Banco de dados é nil!")
 	}
-	service.CSVtoSQL("data/csv/faturas.csv")
 
 	// Configura o renderer de templates com as funções personalizadas
 	renderer := &TemplateRenderer{
@@ -81,6 +80,9 @@ func main() {
 
 	// Configurar rotas
 	routes.SetUpRoutes(e)
+
+	hash, _ := bcrypt.GenerateFromPassword([]byte("user123"), bcrypt.DefaultCost)
+	fmt.Println(string(hash))
 
 	// Iniciar o servidor
 	log.Println("🚀 Servidor iniciando na porta :1323")

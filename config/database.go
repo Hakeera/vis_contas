@@ -30,25 +30,30 @@ func InitDB() {
 		dbName := os.Getenv("DB_NAME")
 		dbHost := os.Getenv("DB_HOST")
 		dbPort := os.Getenv("DB_PORT")
+		dbSchema := os.Getenv("DB_SCHEMA")
+		sslmode := os.Getenv("DB_SSLMODE")
+
+		// Define o search_path para o schema financeiro
 		dsn := fmt.Sprintf(
-			"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-			dbHost, dbUser, dbPassword, dbName, dbPort,
+			"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s search_path=%s",
+			dbHost, dbUser, dbPassword, dbName, dbPort, sslmode, dbSchema,
 		)
+
 		var err error
 		DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
 		if err != nil {
-			log.Fatalf("Erro ao conectar ao banco de dados: %v", err)
+			log.Fatalf("❌ Erro ao conectar ao banco de dados: %v", err)
 		}
 
-		// Migrar as tabelas
+		log.Println("✅ Conectado ao banco de dados com sucesso!")
+
+		// Migrar as tabelas (opcional se já existir via init.sql)
 		if err := DB.AutoMigrate(
 			&model.Fatura{},
 			&model.User{},
 		); err != nil {
-			log.Fatalf("Erro ao migrar banco: %v", err)
+			log.Fatalf("❌ Erro ao migrar banco: %v", err)
 		}
-
 	})
 }
 

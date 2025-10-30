@@ -3,17 +3,20 @@
 	<table class="invoice-table">
 		<thead>
 			<tr>
+				<th>ID</th>
 				<th>Vencimento</th>
 				<th>Destinatário</th>
 				<th>Categoria</th>
 				<th>Valor</th>
 				<th>Situação</th>
 				<th>Ações</th>
+				<th>Boleto</th>
 			</tr>
 		</thead>
 		<tbody>
 			{{ range .Faturas }}
 			<tr class="invoice-row {{ if eq .Situacao "Pago" }}paid{{ else }}pending{{ end }}">
+				<td>{{.ID}}</td>
 				<td class="date">{{ .Vencimento.Format "02/01/2006" }}</td>
 				<td class="recipient">{{ .Destinatario }}</td>
 				<td>
@@ -41,6 +44,9 @@
 						Deixar Pago
 					</button>
 					{{ end }}
+				</td>
+				<td class="boleto-cell" style="cursor: pointer;" onclick="copyBoleto(this)">
+					{{ .Boleto }}
 				</td>
 			</tr>
 			{{ else }}

@@ -73,8 +73,8 @@ body::before {
 }
 
 @keyframes rotate {
-from { transform: rotate(0deg); }
-to { transform: rotate(360deg); }
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
 }
 
 .sidebar-header h1 {
@@ -151,7 +151,7 @@ to { transform: rotate(360deg); }
 	opacity: 1;
 }
 
-/* DESTAQUE MÁXIMO para item ativo da sidebar */
+/* Item ativo da sidebar com destaque */
 .nav-link.active {
 	background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
 	color: white;
@@ -183,14 +183,18 @@ to { transform: rotate(360deg); }
 }
 
 @keyframes activeGlow {
-from { box-shadow: 
-	0 8px 32px rgba(168, 85, 247, 0.4),
-	0 0 20px rgba(168, 85, 247, 0.3),
-	inset 0 1px 0 rgba(255, 255, 255, 0.2); }
-to { box-shadow: 
-	0 12px 40px rgba(168, 85, 247, 0.6),
-	0 0 30px rgba(168, 85, 247, 0.4),
-	inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+	from { 
+		box-shadow: 
+			0 8px 32px rgba(168, 85, 247, 0.4),
+			0 0 20px rgba(168, 85, 247, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	}
+	to { 
+		box-shadow: 
+			0 12px 40px rgba(168, 85, 247, 0.6),
+			0 0 30px rgba(168, 85, 247, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.3);
+	}
 }
 
 .nav-icon {
@@ -308,7 +312,7 @@ to { box-shadow:
 	background: var(--accent-color);
 }
 
-/* DESTAQUE EXTREMO para cartões pendentes */
+/* Cartões pendentes com destaque */
 .summary-card.pending {
 	--accent-color: #f59e0b;
 	background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 10%, #fff 30%);
@@ -320,16 +324,16 @@ to { box-shadow:
 }
 
 @keyframes pendingPulse {
-from { 
-	box-shadow: 
-		0 0 30px rgba(245, 158, 11, 0.4),
-		0 8px 24px rgba(0, 0, 0, 0.1);
-}
-to { 
-	box-shadow: 
-		0 0 40px rgba(245, 158, 11, 0.6),
-		0 12px 32px rgba(245, 158, 11, 0.2);
-}
+	from { 
+		box-shadow: 
+			0 0 30px rgba(245, 158, 11, 0.4),
+			0 8px 24px rgba(0, 0, 0, 0.1);
+	}
+	to { 
+		box-shadow: 
+			0 0 40px rgba(245, 158, 11, 0.6),
+			0 12px 32px rgba(245, 158, 11, 0.2);
+	}
 }
 
 .summary-card.pending::after {
@@ -342,8 +346,8 @@ to {
 }
 
 @keyframes bounce {
-from { transform: translateY(0); }
-to { transform: translateY(-4px); }
+	from { transform: translateY(0); }
+	to { transform: translateY(-4px); }
 }
 
 .summary-card.paid {
@@ -484,24 +488,29 @@ to { transform: translateY(-4px); }
 	background: #ffffff;
 }
 
-/* DESTAQUE MÁXIMO para linhas pendentes - sem animações */
+/* Linhas pendentes com destaque visual */
 .invoice-table tbody tr.pending {
 	background: #ffffff;
 	border-left: 4px solid #f59e0b;
-	box-shadow: 0 10 10px rgba(245, 158, 11, 0.3); /* efeito suave fixo */
+	box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
 }
 
-/* Efeito ao passar o mouse, opcional */
 .invoice-table tbody tr.pending:hover {
 	transform: translateX(12px);
 	box-shadow: 8px 0 30px rgba(245, 158, 11, 0.2);
-	/* Pode manter o mesmo background ou ajustar se quiser */
 }
 
 .invoice-table tbody td {
 	padding: 16px;
 	vertical-align: middle;
 	position: relative;
+}
+
+/* Estilo para célula de ID */
+.invoice-table tbody td:first-child {
+	font-weight: 600;
+	color: #64748b;
+	font-size: 0.9rem;
 }
 
 .date {
@@ -532,6 +541,54 @@ to { transform: translateY(-4px); }
 	display: inline-block;
 }
 
+/* Estilo para célula de boleto */
+.boleto-cell {
+	font-family: 'Courier New', monospace;
+	font-size: 0.85rem;
+	color: #475569;
+	background: #f8fafc;
+	padding: 8px 12px !important;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	user-select: none;
+	position: relative;
+}
+
+.boleto-cell:hover {
+	background: #e2e8f0;
+	color: #1e293b;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.boleto-cell:active {
+	transform: scale(0.98);
+	background: #cbd5e1;
+}
+
+/* Tooltip para indicar que é clicável */
+.boleto-cell::after {
+	content: '📋 Clique para copiar';
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-8px);
+	background: rgba(0, 0, 0, 0.9);
+	color: white;
+	padding: 6px 12px;
+	border-radius: 6px;
+	font-size: 0.75rem;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s ease;
+	z-index: 10;
+}
+
+.boleto-cell:hover::after {
+	opacity: 1;
+}
+
 /* Category tags */
 .category-tag {
 	padding: 8px 16px;
@@ -542,6 +599,7 @@ to { transform: translateY(-4px); }
 	letter-spacing: 0.5px;
 	position: relative;
 	overflow: hidden;
+	display: inline-block;
 }
 
 .category-escritorio { background: #dbeafe; color: #1d4ed8; }
@@ -552,7 +610,16 @@ to { transform: translateY(-4px); }
 .category-vendas { background: #fee2e2; color: #dc2626; }
 .category-rh { background: #f3e8ff; color: #7c3aed; }
 
-/* Status badges com DESTAQUE para pendentes */
+/* Mapeamento das categorias do backend */
+.category-Fornecimento { background: #dbeafe; color: #1d4ed8; }
+.category-Serviço { background: #fce7f3; color: #be185d; }
+.category-Operacional { background: #d1fae5; color: #047857; }
+.category-Tecnologia { background: #e0e7ff; color: #5b21b6; }
+.category-Financeiro { background: #fef3c7; color: #d97706; }
+.category-Vendas { background: #fee2e2; color: #dc2626; }
+.category-RH { background: #f3e8ff; color: #7c3aed; }
+
+/* Status badges com destaque para pendentes */
 .status-badge {
 	padding: 8px 16px;
 	border-radius: 24px;
@@ -562,6 +629,7 @@ to { transform: translateY(-4px); }
 	letter-spacing: 0.5px;
 	position: relative;
 	overflow: hidden;
+	display: inline-block;
 }
 
 .status-paid {
@@ -578,18 +646,15 @@ to { transform: translateY(-4px); }
 	animation: pendingBadgePulse 2s ease-in-out infinite alternate;
 }
 
-.no-data {
-	background: #ffffff
-}
 @keyframes pendingBadgePulse {
-from { 
-	box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-	transform: scale(1);
-}
-to { 
-	box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
-	transform: scale(1.05);
-}
+	from { 
+		box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+		transform: scale(1);
+	}
+	to { 
+		box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+		transform: scale(1.05);
+	}
 }
 
 .status-pending::before {
@@ -599,8 +664,17 @@ to {
 }
 
 @keyframes wiggle {
-0%, 100% { transform: rotate(-3deg); }
-50% { transform: rotate(3deg); }
+	0%, 100% { transform: rotate(-3deg); }
+	50% { transform: rotate(3deg); }
+}
+
+/* Mensagem quando não há dados */
+.no-data {
+	background: #ffffff;
+	text-align: center;
+	padding: 40px;
+	color: #64748b;
+	font-style: italic;
 }
 
 /* Action buttons */
@@ -638,12 +712,12 @@ to {
 }
 
 @keyframes pendingButtonPulse {
-from { 
-	box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-}
-to { 
-	box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
-}
+	from { 
+		box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+	}
+	to { 
+		box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+	}
 }
 
 .btn-pending:hover {
@@ -790,6 +864,11 @@ to {
 
 	.btn-pending {
 		animation: none;
+	}
+
+	/* Tooltip do boleto não aparece em mobile */
+	.boleto-cell::after {
+		display: none;
 	}
 }
 

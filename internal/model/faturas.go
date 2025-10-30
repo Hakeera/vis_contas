@@ -17,3 +17,7 @@ type Fatura struct {
 	Boleto       string    `gorm:"column:boleto;type:varchar(50)"`
 	Empresa      string    `gorm:"column:empresa;type:varchar(100)"`
 }
+
+func (Fatura) TableName() string {
+	return "financeiro.faturas"
+}
