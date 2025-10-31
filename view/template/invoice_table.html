@@ -22,7 +22,7 @@
 				<td>
 					<span class="category-tag category-{{ .Categoria }}">{{ .Categoria }}</span>
 				</td>
-				<td class="value">R$ {{ printf "%.2f" .Valor }}</td>
+				<td class="value">R$ {{ formatMoney .Valor }}</td>
 				<td>
 					<span class="status-badge {{ if eq .Situacao "Pago" }}status-paid{{ else }}status-pending{{ end }}">{{ .Situacao }}</span>
 				</td>

@@ -1,3 +1,7 @@
+// main.go
+// Aplicação principal do sistema de controle de pagamentos.
+// Responsável por inicializar o servidor Echo, carregar templates e conectar ao banco de dados.
+
 package main
 
 import (
@@ -7,16 +11,17 @@ import (
 	"log"
 	"vis_contas/config"
 	"vis_contas/internal/routes"
+	"vis_contas/utils"
 
 	"github.com/labstack/echo/v4"
-	"golang.org/x/crypto/bcrypt"
 )
 
-// TemplateRenderer para Echo
+// TemplateRenderer implementa o renderer de templates HTML para o Echo.
 type TemplateRenderer struct {
 	templates *template.Template
 }
 
+// Render executa o template solicitado e escreve a saída no Writer.
 func (t *TemplateRenderer) Render(w io.Writer, name string, data any, c echo.Context) error {
 	tmpl := t.templates.Lookup(name)
 	if tmpl == nil {
@@ -30,9 +35,7 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data any, c echo.Con
 	log.Printf("✅ Renderizando template: %s", name)
 	log.Printf("📊 Dados: %+v", data)
 
-	// 🎯 Capturar o erro da execução
-	err := t.templates.ExecuteTemplate(w, name, data)
-	if err != nil {
+	if err := tmpl.ExecuteTemplate(w, name, data); err != nil {
 		log.Printf("❌ ERRO na execução do template '%s': %v", name, err)
 		return fmt.Errorf("erro ao executar template %s: %v", name, err)
 	}
@@ -42,20 +45,15 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data any, c echo.Con
 }
 
 func main() {
-
-	// Carregar Variáveis de Ambiente
+	// Carrega variáveis de ambiente e inicializa o banco
 	config.LoadEnv()
-
-	// Inicializa o banco de dados
 	config.InitDB()
 
-	// Verifica se o banco está funcionando
+	// Teste de conexão com o banco
 	db := config.GetDB()
 	if db != nil {
 		log.Println("✅ Banco de dados conectado com sucesso!")
-		// Teste simples de conexão
-		sqlDB, err := db.DB()
-		if err == nil {
+		if sqlDB, err := db.DB(); err == nil {
 			if err := sqlDB.Ping(); err == nil {
 				log.Println("✅ Ping no banco OK!")
 			} else {
@@ -66,25 +64,22 @@ func main() {
 		log.Println("❌ Banco de dados é nil!")
 	}
 
-	// Configura o renderer de templates com as funções personalizadas
+	tmpl := template.New("").Funcs(utils.TemplateFunctions)
+	tmpl = template.Must(tmpl.ParseGlob("view/**/*.html"))
+
 	renderer := &TemplateRenderer{
-		templates: template.Must(
-			template.New("").ParseGlob("view/**/*.html"),
-		),
+		templates: tmpl,
 	}
 
-	// Instância do Echo
+	// Inicialização do servidor Echo
 	e := echo.New()
 	e.Static("/static", "view/static")
 	e.Renderer = renderer
 
-	// Configurar rotas
+	// Configuração das rotas da aplicação
 	routes.SetUpRoutes(e)
 
-	hash, _ := bcrypt.GenerateFromPassword([]byte("user123"), bcrypt.DefaultCost)
-	fmt.Println(string(hash))
-
-	// Iniciar o servidor
+	// Inicia o servidor na porta 8080
 	log.Println("🚀 Servidor iniciando na porta :1323")
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":8080"))
 }

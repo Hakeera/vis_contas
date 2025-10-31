@@ -194,17 +194,6 @@ body {
 	font-size: 16px;
 }
 
-.logout-btn {
-	margin-top: 20px;
-	background: #6c757d;
-}
-
-.logout-btn:hover {
-	background: #5a6268;
-	transform: translateY(-2px);
-	box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
-}
-
 .htmx-request .loading {
 	display: block;
 }
