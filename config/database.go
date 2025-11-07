@@ -1,4 +1,6 @@
-// Package config
+// config/database.go
+// Inicializa e mantém a conexão com o banco de dados PostgreSQL via GORM.
+
 package config
 
 import (
@@ -13,16 +15,16 @@ import (
 )
 
 var (
-	// DB é a instância global de conexão com o banco de dados
+	// DB é a instância global de conexão com o banco.
 	DB *gorm.DB
-	// once garante que a inicialização do banco ocorra apenas uma vez
+
+	// once garante inicialização única e thread-safe.
 	once sync.Once
 )
 
-// InitDB inicializa a conexão com o banco de dados PostgreSQL
-// utilizando as variáveis de ambiente para configuração
-// A função também realiza a migração automática das tabelas necessárias
-// Esta função é thread-safe e garante que a inicialização ocorra apenas uma vez
+// InitDB configura e conecta ao banco PostgreSQL.
+// Usa variáveis de ambiente para montar a string de conexão (DSN).
+// Executa migrações automáticas dos modelos principais.
 func InitDB() {
 	once.Do(func() {
 		dbUser := os.Getenv("DB_USER")
@@ -33,7 +35,6 @@ func InitDB() {
 		dbSchema := os.Getenv("DB_SCHEMA")
 		sslmode := os.Getenv("DB_SSLMODE")
 
-		// Define o search_path para o schema financeiro
 		dsn := fmt.Sprintf(
 			"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s search_path=%s",
 			dbHost, dbUser, dbPassword, dbName, dbPort, sslmode, dbSchema,
@@ -42,27 +43,25 @@ func InitDB() {
 		var err error
 		DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {
-			log.Fatalf("❌ Erro ao conectar ao banco de dados: %v", err)
+			log.Fatalf("❌ Erro ao conectar ao banco: %v", err)
 		}
+		log.Println("✅ Banco de dados conectado com sucesso!")
 
-		log.Println("✅ Conectado ao banco de dados com sucesso!")
-
-		// Migrar as tabelas (opcional se já existir via init.sql)
+		// Migração automática de tabelas principais
 		if err := DB.AutoMigrate(
 			&model.Fatura{},
 			&model.User{},
 		); err != nil {
-			log.Fatalf("❌ Erro ao migrar banco: %v", err)
+			log.Fatalf("❌ Erro na migração: %v", err)
 		}
 	})
 }
 
-// GetDB retorna a instância do banco de dados inicializada
-// Causa erro fatal se o banco de dados não foi inicializado previamente
-// @return *gorm.DB Instância de conexão com o banco de dados
+// GetDB retorna a instância ativa do banco.
+// Encerra a aplicação se o banco não tiver sido inicializado.
 func GetDB() *gorm.DB {
 	if DB == nil {
-		log.Fatal("Banco de dados não foi inicializado!")
+		log.Fatal("❌ Banco de dados não inicializado!")
 	}
 	return DB
 }

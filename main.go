@@ -80,6 +80,6 @@ func main() {
 	routes.SetUpRoutes(e)
 
 	// Inicia o servidor na porta 8080
-	log.Println("🚀 Servidor iniciando na porta :1323")
-	e.Logger.Fatal(e.Start(":8080"))
+	log.Println("🚀 Servidor iniciando na porta :8080")
+	e.Logger.Fatal(e.Start("127.0.0.1:8080"))
 }

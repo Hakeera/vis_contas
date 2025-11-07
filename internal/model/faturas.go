@@ -1,8 +1,12 @@
-// Package model
+// internal/model/faturas.go
+// Define a entidade Fatura e seu mapeamento para a tabela financeiro.faturas.
+
 package model
 
 import "time"
 
+// Fatura representa um registro financeiro de pagamento ou recebimento.
+// Contém informações como valor, vencimento, categoria e situação.
 type Fatura struct {
 	ID           uint      `gorm:"primaryKey;autoIncrement;column:id"`
 	Vencimento   time.Time `gorm:"column:vencimento;not null"`
@@ -18,6 +22,7 @@ type Fatura struct {
 	Empresa      string    `gorm:"column:empresa;type:varchar(100)"`
 }
 
+// TableName define o nome completo da tabela no banco de dados.
 func (Fatura) TableName() string {
 	return "financeiro.faturas"
 }
