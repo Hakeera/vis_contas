@@ -93,6 +93,9 @@ func FilterFaturas(categoria, situacao, dataStr, empresa string) ([]model.Fatura
 		query = query.Where(whereClause, args...)
 	}
 
+	// Ordenar os resultados por data (vencimento) de forma ascendente
+	query = query.Order("vencimento ASC")
+
 	// Executar query
 	var filtradas []model.Fatura
 	result := query.Find(&filtradas)
